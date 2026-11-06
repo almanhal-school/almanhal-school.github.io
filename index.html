@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدرسة المنهل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f2a4a; --teal:#1e8a8a; --sand:#f6f1e7; --ink:#1d2430; --muted:#5b6574; --white:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Tajawal',system-ui,sans-serif;color:var(--ink);background:var(--white);line-height:1.8}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:auto;padding:0 20px}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid #e8e8e8}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;color:var(--navy)}
+  .logo span.mark{width:40px;height:40px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:1.2rem}
+  nav{display:flex;gap:24px;font-weight:500}
+  nav a:hover{color:var(--teal)}
+
+  .hero{background:linear-gradient(135deg,var(--navy),#16406e);color:#fff;padding:110px 0 120px;text-align:center}
+  .hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;margin-bottom:14px}
+  .hero p{font-size:1.2rem;opacity:.9;max-width:620px;margin:0 auto 32px}
+  .btn{display:inline-block;padding:13px 30px;border-radius:999px;font-weight:700;background:var(--teal);color:#fff;transition:.2s}
+  .btn:hover{transform:translateY(-2px);background:#25a0a0}
+
+  section{padding:90px 0}
+  h2{font-size:2rem;color:var(--navy);margin-bottom:12px;text-align:center}
+  .sub{color:var(--muted);text-align:center;max-width:620px;margin:0 auto 46px}
+
+  .about{background:var(--sand)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+  .card{background:#fff;border-radius:16px;padding:30px;box-shadow:0 4px 20px rgba(15,42,74,.06)}
+  .card .ic{font-size:2rem;margin-bottom:10px}
+  .card h3{color:var(--navy);margin-bottom:6px}
+  .card p{color:var(--muted)}
+
+  .stages .cards .card{border-top:4px solid var(--teal);text-align:center}
+
+  .contact{background:var(--navy);color:#fff;text-align:center}
+  .contact h2{color:#fff}
+  .contact .sub{color:#c9d4e2}
+  .contact-list{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
+  .contact-list div{background:rgba(255,255,255,.08);padding:18px 26px;border-radius:14px;min-width:220px}
+
+  footer{background:#0a1d33;color:#9fb0c4;text-align:center;padding:24px 0;font-size:.95rem}
+
+  @media (max-width:640px){
+    nav{display:none}
+    section{padding:64px 0}
+    .hero{padding:80px 0 90px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="#" class="logo"><span class="mark">م</span> مدرسة المنهل</a>
+    <nav>
+      <a href="#about">عن المدرسة</a>
+      <a href="#stages">المراحل الدراسية</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>مدرسة المنهل</h1>
+    <p>نبني جيلاً واعياً ومبدعاً، بتعليم متميز وبيئة آمنة تحفّز على التعلّم.</p>
+    <a href="#contact" class="btn">سجّل الآن</a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>عن المدرسة</h2>
+    <p class="sub">نؤمن بأن كل طالب يملك قدرات مميزة، ودورنا أن نكتشفها وننمّيها.</p>
+    <div class="cards">
+      <div class="card"><div class="ic">🎯</div><h3>رؤيتنا</h3><p>تعليم متميز يُعدّ الطلاب لمستقبل ناجح.</p></div>
+      <div class="card"><div class="ic">📚</div><h3>رسالتنا</h3><p>بيئة تعليمية حديثة تجمع بين القيم والمعرفة والمهارات.</p></div>
+      <div class="card"><div class="ic">🤝</div><h3>قيمنا</h3><p>الاحترام، والمسؤولية، والإبداع، والتعاون.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="stages" id="stages">
+  <div class="wrap">
+    <h2>المراحل الدراسية</h2>
+    <p class="sub">برامج تعليمية تناسب كل مرحلة عمرية.</p>
+    <div class="cards">
+      <div class="card"><h3>رياض الأطفال</h3><p>بداية ممتعة لرحلة التعلّم.</p></div>
+      <div class="card"><h3>المرحلة الابتدائية</h3><p>تأسيس قوي في المهارات الأساسية.</p></div>
+      <div class="card"><h3>المرحلة الإعدادية</h3><p>تنمية التفكير والاستقلالية.</p></div>
+      <div class="card"><h3>المرحلة الثانوية</h3><p>إعداد للجامعة والحياة العملية.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>تواصل معنا</h2>
+    <p class="sub">يسعدنا استقبال استفساراتكم.</p>
+    <div class="contact-list">
+      <div>📍 العنوان<br><strong>يُضاف لاحقاً</strong></div>
+      <div>📞 الهاتف<br><strong>يُضاف لاحقاً</strong></div>
+      <div>✉️ البريد الإلكتروني<br><strong>يُضاف لاحقاً</strong></div>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> مدرسة المنهل. جميع الحقوق محفوظة.</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
