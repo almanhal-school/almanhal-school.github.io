@@ -78,6 +78,8 @@ tr:last-child td{border-bottom:0}
 td.num{text-align:center}
 .pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.82rem;font-weight:600}
 .p-good{background:var(--good-bg);color:var(--good)} .p-warn{background:var(--warn-bg);color:var(--warn)} .p-bad{background:var(--bad-bg);color:var(--bad)}
+.mcards{display:none}.mc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}.mh{display:flex;align-items:center;gap:10px;margin-bottom:8px}.mh>b{flex:1}.mg{white-space:nowrap}.mn{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);line-height:1.7;font-size:.95em;color:var(--muted)}
+@media (max-width:700px){.tbl.gt{display:none}.mcards{display:block}}
 .tnote{min-width:180px;max-width:340px;font-size:.92em;line-height:1.6;color:var(--muted)}
 .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:60px}
 .bar i{display:block;height:100%;background:var(--ink)}
@@ -151,9 +153,10 @@ function report(tab="grades"){const s=DB.students.find(x=>x.cpr===session.cpr);
  const done=SUBJ.filter(k=>typeof s.g[k]==="number"), sum=done.reduce((a,k)=>a+s.g[k],0), avg=done.length?Math.round(sum/done.length*5):null;
  const fmt=x=>String(+x.toFixed(2));
  const rows=SUBJ.map(k=>{const x=s.g[k],n=s.notes.find(o=>o.t===k);if(typeof x!=="number")return`<tr><td>${k}</td><td class="num">—</td><td></td><td><span class="pill" style="background:var(--soft)">لم تُرصد بعد</span></td><td></td></tr>`;const[gl,gc]=grade(x*5);return`<tr><td>${k}</td><td class="num"><b>${fmt(x)}</b> / 20</td><td><div class="bar"><i style="width:${x*5}%"></i></div></td><td><span class="pill ${gc}">${gl}</span></td><td class="tnote">${n?esc(n.x):"—"}</td></tr>`}).join("");
+ const cards=SUBJ.map(k=>{const x=s.g[k],n=s.notes.find(o=>o.t===k);if(typeof x!=="number")return`<div class="mc"><div class="mh"><b>${k}</b><span class="pill" style="background:var(--soft)">لم تُرصد بعد</span></div></div>`;const[gl,gc]=grade(x*5);return`<div class="mc"><div class="mh"><b>${k}</b><span class="mg"><b>${fmt(x)}</b> / 20</span><span class="pill ${gc}">${gl}</span></div><div class="bar"><i style="width:${x*5}%"></i></div>${n?`<div class="mn">${esc(n.x)}</div>`:""}</div>`}).join("");
  const ex=DB.excuses.filter(e=>e.cpr===s.cpr).map(e=>`<div class="note"><small>${esc(e.date)} · ${e.status}</small><div>${esc(e.text)}</div></div>`).join("");
  let body="";
- if(tab==="grades")body=`<h2 style="margin:4px 0 10px">اختبار الوقفة الأولى</h2>${done.length?`<p class="lead" style="margin-bottom:10px">المجموع ${fmt(sum)} من ${done.length*20}</p>`:""}<div class="tbl"><table><thead><tr><th>المادة</th><th>الدرجة</th><th></th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+ if(tab==="grades")body=`<h2 style="margin:4px 0 10px">اختبار الوقفة الأولى</h2>${done.length?`<p class="lead" style="margin-bottom:10px">المجموع ${fmt(sum)} من ${done.length*20}</p>`:""}<div class="mcards">${cards}</div><div class="tbl gt"><table><thead><tr><th>المادة</th><th>الدرجة</th><th></th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table></div>`;
  if(tab==="att")body=`<div class="student"><div class="kv"><small>أيام الغياب</small><b>${s.absent}</b></div><div class="kv"><small>مرات التأخير</small><b>${s.late}</b></div></div>
   <form class="card" id="xf" style="display:flex;flex-direction:column;gap:12px"><h2>تقديم عذر غياب</h2>
   <div class="row"><div class="field"><label for="xd">تاريخ الغياب</label><input id="xd" type="date" required></div></div>
