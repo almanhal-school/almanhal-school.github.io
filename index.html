@@ -188,13 +188,12 @@ function report(tab="grades"){const s=DB.students.find(x=>x.cpr===session.cpr);
   <div class="row"><div class="field"><label for="xd">تاريخ الغياب</label><input id="xd" type="date" required></div></div>
   <div class="field"><label for="xt">سبب الغياب</label><textarea id="xt" rows="3" required placeholder="مثال: موعد في المستشفى"></textarea></div>
   <button class="btn" type="submit" style="align-self:flex-start">إرسال العذر</button><div id="xmsg"></div></form>${ex?'<h2 style="margin-top:20px">الأعذار المرسلة</h2>'+ex:''}`;
- if(tab==="msg")body=(m=>m?`<div class="smsg"><div class="smh">رسالة من إدارة المدرسة</div><div class="smb">التصنيف: <b>${m.band}</b> · المعدل العام <bdi dir="ltr">${avg}%</bdi></div><div>${m.text}</div></div>`:'<p class="lead">رسالة المدرسة بتظهر هنا بعد رصد الدرجات.</p>')(schoolMsg(avg,s.q));
  if(tab==="notes")body=s.notes.length?s.notes.map(n=>`<div class="note"><small>${n.t} · ${n.d}</small><div>${esc(n.x)}</div></div>`).join(""):'<p class="lead">ما في ملاحظات من المعلمين حالياً.</p>';
  app.innerHTML=`<div class="view"><div class="top"><div><h1>${s.name}</h1><p class="lead">الفصل الدراسي الأول 2026–2027 · الوقفة الأولى</p></div><button class="btn ghost" id="out">خروج</button></div>
  <div class="student"><div class="kv"><small>الصف</small><b>${s.cls}</b></div><div class="kv"><small>المعدل العام</small><b>${avg===null?"—":avg+"%"}</b></div><div class="kv"><small>التقدير العام</small><b>${avg===null?'<span class="pill" style="background:var(--soft)">لم تُرصد بعد</span>':`<span class="pill ${grade(avg)[1]}">${grade(avg)[0]}</span>`}</b></div><div class="kv"><small>أيام الغياب</small><b>${s.absent}</b></div></div>
- <div class="tabs" role="tablist"><button role="tab" id="t-grades" aria-selected="${tab==='grades'}">الدرجات</button><button role="tab" id="t-att" aria-selected="${tab==='att'}">الحضور والأعذار</button><button role="tab" id="t-notes" aria-selected="${tab==='notes'}">ملاحظات المعلمين</button><button role="tab" id="t-msg" aria-selected="${tab==='msg'}">رسالة المدرسة</button></div>${body}</div>`;
+ ${(m=>m?`<div class="smsg"><div class="smh">رسالة من إدارة المدرسة</div><div class="smb">التصنيف: <b>${m.band}</b> · المعدل العام <bdi dir="ltr">${avg}%</bdi></div><div>${m.text}</div></div>`:"")(schoolMsg(avg,s.q))}<div class="tabs" role="tablist"><button role="tab" id="t-grades" aria-selected="${tab==='grades'}">الدرجات</button><button role="tab" id="t-att" aria-selected="${tab==='att'}">الحضور والأعذار</button><button role="tab" id="t-notes" aria-selected="${tab==='notes'}">ملاحظات المعلمين</button></div>${body}</div>`;
  $("#out").onclick=()=>{session=null;location.hash="";route()};
- ["grades","att","notes","msg"].forEach(t=>$("#t-"+t).onclick=()=>report(t));
+ ["grades","att","notes"].forEach(t=>$("#t-"+t).onclick=()=>report(t));
  if(tab==="grades")$("#prt").onclick=()=>printView(s);
  if(tab==="att")$("#xf").onsubmit=e=>{e.preventDefault();DB.excuses.push({cpr:s.cpr,name:s.name,date:$("#xd").value,text:$("#xt").value,status:"بانتظار المراجعة"});report("att");$("#xmsg").innerHTML='<div class="ok">تم إرسال العذر، وبتشوفه المعلمة في بوابتها.</div>'}}
 
