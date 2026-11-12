@@ -94,7 +94,8 @@ td.num{text-align:center}
 .sh-foot{display:flex;justify-content:space-between;margin-top:18px;padding-top:8px;border-top:1px solid #c9d2e3;font-size:12px;color:#5b6b86}
 @page{size:A4;margin:0}
 @media print{body{background:#fff!important}header,footer,.prtools,.prhint{display:none!important}main.wrap{padding:0!important;margin:0!important;max-width:none!important}.view{padding:0!important;margin:0!important}.sheetwrap{overflow:visible}.sheet{box-shadow:none;margin:0;min-height:296mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-.smsg{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid #c9a227;border-radius:12px;padding:14px 16px;margin:4px 0 18px;line-height:1.8}.smh{font-weight:700;margin-bottom:4px;color:#c9a227}
+.smsg{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid #c9a227;border-radius:12px;padding:14px 16px;margin:4px 0 18px;line-height:1.8}@media (max-width:700px){.tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.tabs button{text-align:center}}
+.smb{font-size:.92em;color:var(--muted);margin-bottom:6px}.smh{font-weight:700;margin-bottom:4px;color:#c9a227}
 .sh-msg{margin-top:14px;border:1px solid #c9d2e3;border-inline-start:4px solid #c9a227;padding:10px 14px;font-size:14px;line-height:1.8;background:#fffbea}.sh-msg b{display:block;color:#8a6d00;margin-bottom:2px}
 .star{color:#e0a800;margin-inline-start:6px;font-size:1.15em}
 .tnote{min-width:180px;max-width:340px;font-size:.92em;line-height:1.6;color:var(--muted)}
@@ -142,7 +143,7 @@ const MSGS=[
  [75,"جيد جدًا",["أداء جيد جدًا، ولديك القدرة على الوصول إلى مستويات أعلى بالمثابرة والمراجعة المستمرة.","نشكر لك جهدك، ونشجعك على تنظيم وقتك ومراجعة دروسك يوميًا لتحقيق نتائج أفضل.","مستواك مبشّر، ومع متابعة الأسرة وتعاون المعلمين ستحقق تقدمًا واضحًا بإذن الله."]],
  [60,"جيد",["نقدّر جهدك، ونحتاج منك مزيدًا من التركيز والاهتمام بالواجبات والمراجعة اليومية لرفع مستواك.","يمكنك تحقيق الأفضل، نوصي بالتواصل مع المعلمين ومتابعة الأسرة المستمرة لتحسين النتائج.","بداية يمكن البناء عليها، نثق بقدرتك على التقدم، والمدرسة إلى جانبك لدعمك."]],
  [0,"يحتاج إلى دعم",["نأمل من ولي الأمر الكريم التواصل مع المدرسة لوضع خطة دعم مشتركة تساعد الطالب على تحسين مستواه.","نثق بقدرات ابنكم، ونحتاج إلى تعاون الأسرة والمدرسة معًا لمتابعته ورفع مستواه في الفترة القادمة.","المدرسة ترحب بزيارتكم ومناقشة احتياجات الطالب، فالتعاون بيننا هو مفتاح نجاحه."]]];
-const schoolMsg=(avg,q)=>{if(avg===null)return null;const b=MSGS.find(m=>avg>=m[0]);return{band:b[1],text:avg===100?"درجة كاملة! إدارة المدرسة تهنئك على هذا الإنجاز المميز، فقد حصلت على الدرجة الكاملة في جميع المواد. أنت مصدر فخر لنا ولأسرتك.":b[2][(+q||0)%b[2].length]}};
+const schoolMsg=(avg,q)=>{if(avg===null)return null;const b=MSGS.find(m=>avg>=m[0]);return{band:avg===100?"درجة كاملة":b[1],text:avg===100?"درجة كاملة! إدارة المدرسة تهنئك على هذا الإنجاز المميز، فقد حصلت على الدرجة الكاملة في جميع المواد. أنت مصدر فخر لنا ولأسرتك.":b[2][(+q||0)%b[2].length]}};
 const MAX=[20,20,60];
 const $=s=>document.querySelector(s), app=$("#app");
 let session=null;
@@ -178,18 +179,19 @@ function report(tab="grades"){const s=DB.students.find(x=>x.cpr===session.cpr);
  const cards=SUBJ.map(k=>{const x=s.g[k],n=s.notes.find(o=>o.t===k);if(typeof x!=="number")return`<div class="mc"><div class="mh"><b>${k}</b><span class="pill" style="background:var(--soft)">لم تُرصد بعد</span></div></div>`;const[gl,gc]=grade(x*5);return`<div class="mc"><div class="mh"><b>${k}${s.st.includes(k)?'<span class="star" title="طالب متميز">★</span>':""}</b><span class="mg"><b>${fmt(x)}</b> / 20</span><span class="pill ${gc}">${gl}</span></div><div class="bar"><i style="width:${x*5}%"></i></div>${n?`<div class="mn">${esc(n.x)}</div>`:""}</div>`}).join("");
  const ex=DB.excuses.filter(e=>e.cpr===s.cpr).map(e=>`<div class="note"><small>${esc(e.date)} · ${e.status}</small><div>${esc(e.text)}</div></div>`).join("");
  let body="";
- if(tab==="grades")body=`${(m=>m?`<div class="smsg"><div class="smh">رسالة من إدارة المدرسة</div><div>${m.text}</div></div>`:"")(schoolMsg(avg,s.q))}<h2 style="margin:4px 0 10px">اختبار الوقفة الأولى</h2>${done.length?`<p class="lead" style="margin-bottom:10px">المجموع ${fmt(sum)} من ${done.length*20}</p>`:""}<div class="mcards">${cards}</div><div class="tbl gt"><table><thead><tr><th>المادة</th><th>الدرجة</th><th></th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table></div><div class="prbar"><button class="btn" id="prt"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg> طباعة التقرير / PDF</button></div>`;
+ if(tab==="grades")body=`<h2 style="margin:4px 0 10px">اختبار الوقفة الأولى</h2>${done.length?`<p class="lead" style="margin-bottom:10px">المجموع ${fmt(sum)} من ${done.length*20}</p>`:""}<div class="mcards">${cards}</div><div class="tbl gt"><table><thead><tr><th>المادة</th><th>الدرجة</th><th></th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table></div><div class="prbar"><button class="btn" id="prt"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg> طباعة التقرير / PDF</button></div>`;
  if(tab==="att")body=`<div class="student"><div class="kv"><small>أيام الغياب</small><b>${s.absent}</b></div><div class="kv"><small>مرات التأخير</small><b>${s.late}</b></div></div>
   <form class="card" id="xf" style="display:flex;flex-direction:column;gap:12px"><h2>تقديم عذر غياب</h2>
   <div class="row"><div class="field"><label for="xd">تاريخ الغياب</label><input id="xd" type="date" required></div></div>
   <div class="field"><label for="xt">سبب الغياب</label><textarea id="xt" rows="3" required placeholder="مثال: موعد في المستشفى"></textarea></div>
   <button class="btn" type="submit" style="align-self:flex-start">إرسال العذر</button><div id="xmsg"></div></form>${ex?'<h2 style="margin-top:20px">الأعذار المرسلة</h2>'+ex:''}`;
+ if(tab==="msg")body=(m=>m?`<div class="smsg"><div class="smh">رسالة من إدارة المدرسة</div><div class="smb">التصنيف: <b>${m.band}</b> · المعدل العام <bdi dir="ltr">${avg}%</bdi></div><div>${m.text}</div></div>`:'<p class="lead">رسالة المدرسة بتظهر هنا بعد رصد الدرجات.</p>')(schoolMsg(avg,s.q));
  if(tab==="notes")body=s.notes.length?s.notes.map(n=>`<div class="note"><small>${n.t} · ${n.d}</small><div>${esc(n.x)}</div></div>`).join(""):'<p class="lead">ما في ملاحظات من المعلمين حالياً.</p>';
  app.innerHTML=`<div class="view"><div class="top"><div><h1>${s.name}</h1><p class="lead">الفصل الدراسي الأول 2026–2027 · الوقفة الأولى</p></div><button class="btn ghost" id="out">خروج</button></div>
  <div class="student"><div class="kv"><small>الصف</small><b>${s.cls}</b></div><div class="kv"><small>المعدل العام</small><b>${avg===null?"—":avg+"%"}</b></div><div class="kv"><small>التقدير العام</small><b>${avg===null?'<span class="pill" style="background:var(--soft)">لم تُرصد بعد</span>':`<span class="pill ${grade(avg)[1]}">${grade(avg)[0]}</span>`}</b></div><div class="kv"><small>أيام الغياب</small><b>${s.absent}</b></div></div>
- <div class="tabs" role="tablist"><button role="tab" id="t-grades" aria-selected="${tab==='grades'}">الدرجات</button><button role="tab" id="t-att" aria-selected="${tab==='att'}">الحضور والأعذار</button><button role="tab" id="t-notes" aria-selected="${tab==='notes'}">ملاحظات المعلمين</button></div>${body}</div>`;
+ <div class="tabs" role="tablist"><button role="tab" id="t-grades" aria-selected="${tab==='grades'}">الدرجات</button><button role="tab" id="t-att" aria-selected="${tab==='att'}">الحضور والأعذار</button><button role="tab" id="t-notes" aria-selected="${tab==='notes'}">ملاحظات المعلمين</button><button role="tab" id="t-msg" aria-selected="${tab==='msg'}">رسالة المدرسة</button></div>${body}</div>`;
  $("#out").onclick=()=>{session=null;location.hash="";route()};
- ["grades","att","notes"].forEach(t=>$("#t-"+t).onclick=()=>report(t));
+ ["grades","att","notes","msg"].forEach(t=>$("#t-"+t).onclick=()=>report(t));
  if(tab==="grades")$("#prt").onclick=()=>printView(s);
  if(tab==="att")$("#xf").onsubmit=e=>{e.preventDefault();DB.excuses.push({cpr:s.cpr,name:s.name,date:$("#xd").value,text:$("#xt").value,status:"بانتظار المراجعة"});report("att");$("#xmsg").innerHTML='<div class="ok">تم إرسال العذر، وبتشوفه المعلمة في بوابتها.</div>'}}
 
@@ -202,7 +204,7 @@ function printView(s){const fmt=x=>String(+x.toFixed(2)),done=SUBJ.filter(k=>typ
  <table class="sh-info"><tr><td><span>اسم الطالب</span><b>${esc(s.name)}</b></td><td><span>الصف</span><b>${esc(s.cls)}</b></td></tr></table>
  <table class="sh-g"><thead><tr><th>المادة</th><th>الدرجة</th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table>
  <table class="sh-sum"><tr><td><span>المجموع</span><b>${done.length?fmt(sum)+" من "+done.length*20:"—"}</b></td><td><span>المعدل العام</span><b>${avg===null?"—":avg+"%"}</b></td><td><span>التقدير العام</span><b>${avg===null?"—":grade(avg)[0]}</b></td></tr></table>
- ${(m=>m?`<div class="sh-msg"><b>رسالة من إدارة المدرسة</b><div>${m.text}</div></div>`:"")(schoolMsg(avg,s.q))}<div class="sh-sig"><div>توقيع ولي الأمر<i></i></div><div>ختم المدرسة<i></i></div></div>
+ ${(m=>m?`<div class="sh-msg"><b>رسالة من إدارة المدرسة <span style="font-weight:400;color:#5b6b86">· التصنيف: ${m.band}</span></b><div>${m.text}</div></div>`:"")(schoolMsg(avg,s.q))}<div class="sh-sig"><div>توقيع ولي الأمر<i></i></div><div>ختم المدرسة<i></i></div></div>
  <div class="sh-foot"><span>تاريخ الطباعة: ${today}</span><span dir="ltr">Prepared by Mrs. Sarah Taradah</span></div></div></div></div>`;
  $("#pback").onclick=()=>report("grades");$("#pgo").onclick=()=>window.print();
  $("#ppdf").onclick=async()=>{const b=$("#ppdf");b.disabled=true;b.textContent="جاري التجهيز...";
