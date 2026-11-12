@@ -87,17 +87,19 @@ td.num{text-align:center}
 .sh-head{display:flex;align-items:center;gap:14px;border-bottom:3px solid #1e3c72;padding-bottom:10px}.sh-head img{width:70px;height:auto}
 .sh-k{font-size:13px;color:#5b6b86}.sh-s{font-size:20px;font-weight:700;color:#1e3c72}
 .sh-t{text-align:center;font-size:20px;margin:18px 0 2px;color:#1e3c72}.sh-sub{text-align:center;color:#5b6b86;font-size:14px;margin-bottom:14px}
-.sheet table{width:100%;border-collapse:collapse}.sh-info td,.sh-sum td{border:1px solid #c9d2e3;padding:8px 12px}.sh-info span,.sh-sum span{display:block;font-size:12px;color:#5b6b86}.sh-info b,.sh-sum b{font-size:16px}
+.sheet table{width:100%;border-collapse:collapse;min-width:0}.sh-info td,.sh-sum td{border:1px solid #c9d2e3;padding:8px 12px}.sh-info span,.sh-sum span{display:block;font-size:12px;color:#5b6b86}.sh-info b,.sh-sum b{font-size:16px}
 .sh-g{margin:14px 0}.sh-g th{background:#1e3c72;color:#fff;padding:8px;font-size:14px;border:1px solid #1e3c72}.sh-g td{border:1px solid #c9d2e3;padding:7px 10px;font-size:13.5px;line-height:1.6;vertical-align:middle}.sh-g tr:nth-child(even) td{background:#f3f6fb}.sh-g .sb{font-weight:700;white-space:nowrap}.sh-g .c{text-align:center;white-space:nowrap}
 .sh-sum td{background:#eef2f9}
 .sh-sig{display:flex;justify-content:space-between;gap:40px;margin-top:auto;padding-top:28px;font-size:14px}.sh-sig div{flex:1}.sh-sig i{display:block;border-bottom:1px solid #8a97ad;height:34px}
 .sh-foot{display:flex;justify-content:space-between;margin-top:18px;padding-top:8px;border-top:1px solid #c9d2e3;font-size:12px;color:#5b6b86}
 @page{size:A4;margin:0}
-@media print{body{background:#fff!important}header,footer,.prtools,.prhint{display:none!important}main.wrap{padding:0!important;margin:0!important;max-width:none!important}.view{padding:0!important;margin:0!important}.sheetwrap{overflow:visible}.sheet{box-shadow:none;margin:0;min-height:296mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{.sh-sig{margin-top:50px!important}body{background:#fff!important}header,footer,.prtools,.prhint{display:none!important}main.wrap{padding:0!important;margin:0!important;max-width:none!important}.view{padding:0!important;margin:0!important}.sheetwrap{overflow:visible}.sheet{box-shadow:none;margin:0;display:block;min-height:0;height:auto;padding:10mm 14mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .smsg{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid #c9a227;border-radius:12px;padding:14px 16px;margin:4px 0 18px;line-height:1.8}@media (max-width:700px){.tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.tabs button{text-align:center}}
 .smb{font-size:.92em;color:var(--muted);margin-bottom:6px}.smh{font-weight:700;margin-bottom:4px;color:#c9a227}
 .sh-msg{margin-top:14px;border:1px solid #c9d2e3;border-inline-start:4px solid #c9a227;padding:10px 14px;font-size:14px;line-height:1.8;background:#fffbea}.sh-msg b{display:block;color:#8a6d00;margin-bottom:2px}
 .star{color:#e0a800;margin-inline-start:6px;font-size:1.15em}
+.sh-hdr{flex:none;width:182mm;height:29.5mm;max-width:none;display:block;padding-bottom:8px;border-bottom:3px solid #1e3c72}
+.sh-staff{display:flex;justify-content:space-between;gap:16px;margin-top:22px;padding-top:12px;border-top:2px solid #1e3c72;text-align:center;font-size:13px}.sh-staff span{display:block;color:#5b6b86;margin-bottom:3px}.sh-staff b{font-weight:600}.sh-date{text-align:center;font-size:11px;color:#8a97ad;margin-top:10px}
 .tnote{min-width:180px;max-width:340px;font-size:.92em;line-height:1.6;color:var(--muted)}
 .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:60px}
 .bar i{display:block;height:100%;background:var(--ink)}
@@ -199,13 +201,13 @@ function printView(s){const fmt=x=>String(+x.toFixed(2)),done=SUBJ.filter(k=>typ
  const rows=SUBJ.map(k=>{const x=s.g[k],n=s.notes.find(o=>o.t===k);return`<tr><td class="sb">${k}</td><td class="c">${typeof x==="number"?`<b>${fmt(x)}</b> / 20`:"—"}</td><td class="c">${typeof x==="number"?grade(x*5)[0]:"لم تُرصد بعد"}</td><td>${n?esc(n.x).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]\uFE0F?/gu,"").trim()+`${s.st.includes(k)?'<span class="star" title="طالب متميز">★</span>':""}`:""}</td></tr>`}).join("");
  const logo=document.querySelector("img.logo").src, today=new Date().toLocaleDateString("ar-BH-u-nu-latn",{year:"numeric",month:"long",day:"numeric"});
  app.innerHTML=`<div class="view"><div class="prtools"><button class="btn ghost" id="pback">رجوع</button><button class="btn" id="pgo">طباعة</button><button class="btn" id="ppdf">تحميل PDF</button></div><p class="lead prhint">لحفظ التقرير كملف PDF اضغط "تحميل PDF"، أو اضغط "طباعة" واختر "حفظ كـ PDF".</p>
- <div class="sheetwrap"><div class="sheet" id="sheet"><div class="sh-head"><img src="${logo}" alt=""><div><div class="sh-k">مملكة البحرين</div><div class="sh-s">مدرسة المنهل الابتدائية للبنين</div></div></div>
+ <div class="sheetwrap"><div class="sheet" id="sheet"><img class="sh-hdr" src="img/print-header.png" alt="ترويسة المدرسة">
  <h2 class="sh-t">تقرير أداء الطالب – اختبار الوقفة الأولى</h2><div class="sh-sub">الفصل الدراسي الأول 2026–2027</div>
  <table class="sh-info"><tr><td><span>اسم الطالب</span><b>${esc(s.name)}</b></td><td><span>الصف</span><b>${esc(s.cls)}</b></td></tr></table>
  <table class="sh-g"><thead><tr><th>المادة</th><th>الدرجة</th><th>التقدير</th><th>ملاحظات المعلم</th></tr></thead><tbody>${rows}</tbody></table>
  <table class="sh-sum"><tr><td><span>المجموع</span><b>${done.length?fmt(sum)+" من "+done.length*20:"—"}</b></td><td><span>المعدل العام</span><b>${avg===null?"—":avg+"%"}</b></td><td><span>التقدير العام</span><b>${avg===null?"—":grade(avg)[0]}</b></td></tr></table>
  ${(m=>m?`<div class="sh-msg"><b>رسالة من إدارة المدرسة <span style="font-weight:400;color:#5b6b86">· التصنيف: ${m.band}</span></b><div>${m.text}</div></div>`:"")(schoolMsg(avg,s.q))}<div class="sh-sig"><div>توقيع ولي الأمر<i></i></div><div>ختم المدرسة<i></i></div></div>
- <div class="sh-foot"><span>تاريخ الطباعة: ${today}</span><span dir="ltr">Prepared by Mrs. Sarah Taradah</span></div></div></div></div>`;
+ <div class="sh-staff"><div><span>إعداد</span><b>أ.سارة حسن طرادة</b></div><div><span>المديرات المساعدات</span><b>أ.نادية العماري – أ.عبير ميرزا – أ.فتحية الحلواجي</b></div><div><span>مديرة المدرسة</span><b>أ.فاطمة يوسف سعود</b></div></div><div class="sh-date">تاريخ الطباعة: ${today}</div></div></div></div>`;
  $("#pback").onclick=()=>report("grades");$("#pgo").onclick=()=>window.print();
  $("#ppdf").onclick=async()=>{const b=$("#ppdf");b.disabled=true;b.textContent="جاري التجهيز...";
   try{if(!window.html2pdf)await new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="vendor/html2pdf.bundle.min.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)});
