@@ -224,7 +224,10 @@ function renderSide(done){
     <div><label for="cpr">الرقم الشخصي</label><input id="cpr" inputmode="numeric" maxlength="12" autocomplete="off" required placeholder="9 أرقام"><small style="color:var(--muted);font-size:.8rem">ما يظهر لأحد، بس عشان كل وحدة تشارك مرة وحدة.</small></div>
     <div class="err" id="err"></div><button class="btn" type="submit">ابدئي المسابقة</button></form>
     <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--muted)">طريقة احتساب النقاط</summary>${rules}</details>`;
-    $("#join").onsubmit=e=>{e.preventDefault();const n=$("#nm").value.trim();if(n.split(/\s+/).length<2){$("#err").textContent="اكتبي اسمك الثلاثي عشان يظهر صح في قائمة الترتيب.";return}const c=$("#cpr").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g,"");if(c.length<6){$("#err").textContent="اكتبي رقمك الشخصي صح.";return}start(n,c)}}
+    $("#join").onsubmit=async e=>{e.preventDefault();const n=$("#nm").value.trim();if(n.split(/\s+/).length<2){$("#err").textContent="اكتبي اسمك الثلاثي عشان يظهر صح في قائمة الترتيب.";return}const c=$("#cpr").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g,"");if(c.length<6){$("#err").textContent="اكتبي رقمك الشخصي صح.";return}
+      const btn=e.submitter||$("#join button");btn.disabled=true;$("#err").textContent="";
+      if(API){try{const r=await fetch(API+"?check="+c);const j=await r.json();if(!j.allowed){$("#err").textContent="هذا الرقم مو مسجّل في المسابقة. تواصلي مع إدارة المدرسة.";btn.disabled=false;return}}catch(x){$("#err").textContent="تأكدي من الإنترنت وحاولي مرة ثانية.";btn.disabled=false;return}}
+      start(n,c)}}
   else side.innerHTML=`<h2>${p==="before"?"طريقة المسابقة":"النتائج النهائية"}</h2>${stats}${rules}`;
 }
 
@@ -285,7 +288,8 @@ async function finish(){
     ${res.parts?`<div class="parts"><div class="stat"><b>${res.parts[0]}</b><small>الجولة 1 من 90</small></div><div class="stat"><b>${res.parts[1]}</b><small>من هي؟ من 90</small></div><div class="stat"><b>${res.parts[2]}</b><small>الترتيب من 20</small></div></div>`:""}
     <p style="color:var(--muted)">الفائزات الثلاث يُعلنّ بعد إغلاق المسابقة الساعة 9 مساءً.</p><button class="btn" id="back">قائمة الترتيب</button></div></div>`;
     confetti();
-  } else if(res&&res.error==="cpr"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>الرقم الشخصي غلط</h1><p>ارجعي واكتبي رقمك الشخصي صح.</p><button class="btn" id="back">رجوع</button></div></div>`}
+  } else if(res&&res.error==="notallowed"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>الرقم مو مسجّل</h1><p>هذا الرقم الشخصي مو موجود في قائمة المشاركات.</p><button class="btn" id="back">رجوع</button></div></div>`}
+  else if(res&&res.error==="cpr"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>الرقم الشخصي غلط</h1><p>ارجعي واكتبي رقمك الشخصي صح.</p><button class="btn" id="back">رجوع</button></div></div>`}
   else if(res&&res.error==="closed"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>المسابقة مسكّرة</h1><p>المسابقة تفتح يوم 1 ديسمبر من 7 صباحاً إلى 9 مساءً.</p><button class="btn" id="back">رجوع</button></div></div>`}
   else {
     if(!API) store.set(TEST?"wd_done_test":"wd_done",{score:null});
