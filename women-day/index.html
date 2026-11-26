@@ -73,7 +73,7 @@ h2 small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.8
 .p1 .blk{height:130px;background:linear-gradient(var(--gold),#a87921)}.p2 .blk{height:96px;background:linear-gradient(#9aa7bd,#6f7d96)}.p3 .blk{height:74px;background:linear-gradient(#c98a5a,#9c6236)}
 .pod .crown{font-size:1.4rem;line-height:1}
 .empty{color:var(--muted);text-align:center;padding:26px 8px}
-.list{list-style:none;margin:0;padding:0}
+.list{list-style:none;margin:14px 0 0;padding:0;max-height:420px;overflow-y:auto}
 .list li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px dashed var(--line)}
 .list li:last-child{border:0}
 .list .n{font-family:var(--display);font-weight:800;color:var(--muted);text-align:center}
@@ -188,7 +188,7 @@ function home(){
   </div></section>
   <div class="wrap status"><div class="card state" id="state"></div></div>
   <div class="wrap grid">
-    <section class="card"><h2>المتصدرات <small id="upd">${API?"تتحدث تلقائياً":"تظهر بعد ربط النتائج"}</small></h2>
+    <section class="card"><h2>ترتيب المشاركات <small id="upd">${API?"تتحدث تلقائياً":"تظهر بعد ربط النتائج"}</small></h2>
       <div id="podium"></div><ul class="list" id="list"></ul></section>
     <section class="card" id="side"></section>
   </div>`;
@@ -211,7 +211,7 @@ function renderBoard(){
   if(!t.length){pod.innerHTML=`<div class="empty">ما في مشاركات للحين.<br>أول ثلاث نتائج بتظهر هنا.</div>`;list.innerHTML="";return}
   const slot=(i,cls)=>{const x=t[i];return `<div class="pod ${cls}">${i===0?'<div class="crown">👑</div>':""}<div class="who">${x?esc(x.name):"—"}</div><div class="sc">${x?x.score+" نقطة":""}</div><div class="blk">${i+1}</div></div>`};
   pod.innerHTML=`<div class="podium">${slot(1,"p2")}${slot(0,"p1")}${slot(2,"p3")}</div>`;
-  list.innerHTML=t.slice(3,10).map((x,i)=>`<li><span class="n">${i+4}</span><span class="nm">${esc(x.name)} <small>${esc(x.role||"")}</small></span><span class="s">${x.score}</span></li>`).join("");
+  list.innerHTML=t.slice(3).map((x,i)=>`<li><span class="n">${i+4}</span><span class="nm">${esc(x.name)}</span><span class="s">${x.score}</span></li>`).join("");
   const c=$("#count"); if(c) c.textContent=board.count||0;
 }
 function renderSide(done){
@@ -221,19 +221,19 @@ function renderSide(done){
   if(done){side.innerHTML=`<h2>مشاركتك</h2><div class="result" style="margin:6px 0 14px"><div class="big">${done.score??"✓"}</div><p>${done.score!=null?"نقطة من 200":"تم استلام إجاباتك"}${done.rank?` · ترتيبك ${done.rank}`:""}</p></div>${stats}${rules}`;return}
   if(p==="open"){side.innerHTML=`<h2>شاركي الآن</h2>${stats}
     <form class="join" id="join"><div><label for="nm">الاسم الثلاثي</label><input id="nm" maxlength="60" autocomplete="name" required placeholder="مثال: مريم أحمد علي"></div>
-    <div><label for="rl">الصفة</label><select id="rl"><option>معلمة</option><option>إدارية</option><option>أخصائية</option><option>ولية أمر</option><option>أخرى</option></select></div>
+    <div><label for="cpr">الرقم الشخصي</label><input id="cpr" inputmode="numeric" maxlength="12" autocomplete="off" required placeholder="9 أرقام"><small style="color:var(--muted);font-size:.8rem">ما يظهر لأحد، بس عشان كل وحدة تشارك مرة وحدة.</small></div>
     <div class="err" id="err"></div><button class="btn" type="submit">ابدئي المسابقة</button></form>
     <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--muted)">طريقة احتساب النقاط</summary>${rules}</details>`;
-    $("#join").onsubmit=e=>{e.preventDefault();const n=$("#nm").value.trim();if(n.split(/\s+/).length<2){$("#err").textContent="اكتبي اسمك الثلاثي عشان يظهر صح في لوحة المتصدرات.";return}start(n,$("#rl").value)}}
+    $("#join").onsubmit=e=>{e.preventDefault();const n=$("#nm").value.trim();if(n.split(/\s+/).length<2){$("#err").textContent="اكتبي اسمك الثلاثي عشان يظهر صح في قائمة الترتيب.";return}const c=$("#cpr").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g,"");if(c.length<6){$("#err").textContent="اكتبي رقمك الشخصي صح.";return}start(n,c)}}
   else side.innerHTML=`<h2>${p==="before"?"طريقة المسابقة":"النتائج النهائية"}</h2>${stats}${rules}`;
 }
 
 /* ===== المسابقة ===== */
 let S;
-function start(name,role){
+function start(name,cpr){
   clearTimers();
   const ids=Object.keys(Q[9].items).sort(()=>Math.random()-.5);
-  S={name,role,i:0,answers:{},times:{},clues:{},order:ids,t0:Date.now()};
+  S={name,cpr,i:0,answers:{},times:{},clues:{},order:ids,t0:Date.now()};
   window.scrollTo(0,0); step();
 }
 function shell(q,body){
@@ -278,14 +278,15 @@ async function finish(){
   const total=Date.now()-S.t0;
   app.innerHTML=`<div class="wrap result"><div class="card"><p>جاري حساب النتيجة...</p></div></div>`;
   let res=null;
-  if(API){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({name:S.name,role:S.role,answers:S.answers,times:S.times,clues:S.clues,order:S.order,total,did,test:TEST})});res=await r.json()}catch(e){}}
+  if(API){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({name:S.name,cpr:S.cpr,answers:S.answers,times:S.times,clues:S.clues,order:S.order,total,did,test:TEST})});res=await r.json()}catch(e){}}
   if(res&&res.ok){store.set(TEST?"wd_done_test":"wd_done",{score:res.score,rank:res.rank});
     app.innerHTML=`<div class="wrap result"><div class="card"><h1 style="margin-top:0">${res.already?"شاركتي قبل":"أحسنتِ يا "+esc(S.name.split(" ")[0])}!</h1>
     <div class="big">${res.score}</div><p>نقطة من 200 · ترتيبك ${res.rank} من ${res.count}</p>
     ${res.parts?`<div class="parts"><div class="stat"><b>${res.parts[0]}</b><small>الجولة 1 من 90</small></div><div class="stat"><b>${res.parts[1]}</b><small>من هي؟ من 90</small></div><div class="stat"><b>${res.parts[2]}</b><small>الترتيب من 20</small></div></div>`:""}
-    <p style="color:var(--muted)">الفائزات الثلاث يُعلنّ بعد إغلاق المسابقة الساعة 9 مساءً.</p><button class="btn" id="back">لوحة المتصدرات</button></div></div>`;
+    <p style="color:var(--muted)">الفائزات الثلاث يُعلنّ بعد إغلاق المسابقة الساعة 9 مساءً.</p><button class="btn" id="back">قائمة الترتيب</button></div></div>`;
     confetti();
-  } else if(res&&res.error==="closed"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>المسابقة مسكّرة</h1><p>المسابقة تفتح يوم 1 ديسمبر من 7 صباحاً إلى 9 مساءً.</p><button class="btn" id="back">رجوع</button></div></div>`}
+  } else if(res&&res.error==="cpr"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>الرقم الشخصي غلط</h1><p>ارجعي واكتبي رقمك الشخصي صح.</p><button class="btn" id="back">رجوع</button></div></div>`}
+  else if(res&&res.error==="closed"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>المسابقة مسكّرة</h1><p>المسابقة تفتح يوم 1 ديسمبر من 7 صباحاً إلى 9 مساءً.</p><button class="btn" id="back">رجوع</button></div></div>`}
   else {
     if(!API) store.set(TEST?"wd_done_test":"wd_done",{score:null});
     app.innerHTML=`<div class="wrap result"><div class="card"><h1>${API?"ما وصلت إجاباتك":"تم إنهاء التجربة"}</h1><p>${API?"تأكدي من الإنترنت وحاولي مرة ثانية.":"حفظ النتائج ما انربط للحين، فما تظهر الدرجة في هذي التجربة."}</p>
