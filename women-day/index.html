@@ -33,7 +33,7 @@ button,input,select{font:inherit;color:inherit}
 .testbar{background:var(--gold);color:#1b1407;text-align:center;font-weight:700;padding:6px;font-size:.9rem}
 /* hero */
 .hero{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 70%);color:#fff}
-.hero .wrap{padding-block:34px 40px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.hero .wrap{padding-block:34px 40px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto auto;gap:24px;align-items:center}
 .serrate{position:absolute;inset:0 auto 0 0;width:84px;background:#fff;clip-path:polygon(0 0,60% 0,100% 5%,60% 10%,100% 15%,60% 20%,100% 25%,60% 30%,100% 35%,60% 40%,100% 45%,60% 50%,100% 55%,60% 60%,100% 65%,60% 70%,100% 75%,60% 80%,100% 85%,60% 90%,100% 95%,60% 100%,0 100%);opacity:.08}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;font-size:.85rem}
 .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
@@ -53,6 +53,9 @@ h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,5vw,3rem);l
 .pill.on::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.3}}
 .cd{display:flex;gap:8px;direction:rtl}
+.hcd{text-align:center}.hcd>small{display:block;font-weight:700;font-size:.9rem;color:#e7c57a;margin-bottom:8px}
+.hcd .cd div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);min-width:64px;padding:8px 10px}
+.hcd .cd b{font-size:1.8rem;color:#fff}.hcd .cd small{color:rgba(255,255,255,.75)}
 .cd div{background:var(--bg);border-radius:10px;padding:6px 10px;text-align:center;min-width:58px}
 .cd b{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
 .cd small{color:var(--muted);font-size:.75rem}
@@ -127,7 +130,7 @@ h2 small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.8
 canvas.conf{position:fixed;inset:0;pointer-events:none;z-index:50}
 footer{color:var(--muted);text-align:center;font-size:.85rem;padding-block:20px 30px}
 @media (max-width:760px){
-  .hero .wrap{grid-template-columns:1fr}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
+  .hero .wrap{grid-template-columns:1fr}.hcd{justify-self:start}.hcd .cd div{min-width:54px}.hcd .cd b{font-size:1.4rem}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
   .grid{grid-template-columns:1fr}.opts{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -184,6 +187,7 @@ function home(){
     <div><span class="eyebrow"><i></i>1 ديسمبر · يوم المرأة البحرينية</span>
       <h1>مسابقة يوم المرأة البحرينية</h1>
       <p class="slogan">«خمسة وعشرون عاماً في قلب المشروع الإصلاحي»<span>شعار عام 2026</span></p></div>
+    <div class="hcd" id="hcd" aria-live="off"></div>
     <div class="seal" aria-hidden="true"><div><b>25</b><small>عاماً<br>2001 – 2026</small></div></div>
   </div></section>
   <div class="wrap status"><div class="card state" id="state"></div></div>
@@ -196,7 +200,14 @@ function home(){
   timers.push(setInterval(()=>renderState(done),1000));
   timers.push(setInterval(loadBoard,20000)); loadBoard();
 }
+function renderHcd(){
+  const el=$("#hcd"); if(!el) return;
+  if(Date.now()>CLOSE){el.innerHTML=`<small>انتهت المسابقة</small>`;return}
+  const [d,h,m,s]=fmtCd(CLOSE-Date.now());
+  el.innerHTML=`<small>تنتهي المسابقة بعد</small><div class="cd"><div><b>${d}</b><small>يوم</small></div><div><b>${h}</b><small>ساعة</small></div><div><b>${m}</b><small>دقيقة</small></div><div><b>${s}</b><small>ثانية</small></div></div>`;
+}
 function renderState(done){
+  renderHcd();
   const p=phase(), el=$("#state"); if(!el) return;
   if(p==="before"){const [d,h,m,s]=fmtCd(OPEN-Date.now());
     el.innerHTML=`<div><span class="pill wait">تفتح قريباً</span><div class="t">تبدأ المسابقة الثلاثاء 1 ديسمبر الساعة 7:00 صباحاً</div></div>
