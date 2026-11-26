@@ -35,6 +35,7 @@ button,input,select{font:inherit;color:inherit}
 .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#7a0a18 0%,#b30e22 45%,#ce1126 75%,#e0344a 100%);color:#fff}
 .hero .wrap{padding-block:34px 40px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto auto;gap:24px;align-items:center}
 .serrate{position:absolute;inset:0 auto 0 0;width:150px;filter:drop-shadow(4px 0 10px rgba(0,0,0,.2))}.serrate::before{content:'';position:absolute;left:0;top:0;bottom:0;width:62%;background:#fff;clip-path:polygon(0 0,60% 0,100% 10%,60% 20%,100% 30%,60% 40%,100% 50%,60% 60%,100% 70%,60% 80%,100% 90%,60% 100%,0 100%)}
+.mflag{display:none;width:64px;height:38px;border-radius:4px;box-shadow:0 0 0 2px rgba(255,255,255,.85),0 4px 12px rgba(0,0,0,.25);margin-bottom:14px}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;font-size:.85rem}
 .eyebrow i{width:8px;height:8px;border-radius:50%;background:#fff;display:inline-block}
 h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;margin:12px 0 8px;text-wrap:balance}
@@ -131,7 +132,7 @@ canvas.conf{position:fixed;inset:0;pointer-events:none;z-index:50}
 footer{color:var(--muted);text-align:center;font-size:.85rem;padding-block:20px 30px}
 @media (max-width:1340px){.hero .wrap{padding-left:176px}}
 @media (max-width:760px){
-  .serrate{inset:0 0 auto 0;width:auto;height:34px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2))}.serrate::before{left:0;right:0;top:0;bottom:0;width:auto;clip-path:polygon(0 0,100% 0,100% 40%,90.00% 100%,80.00% 40%,70.00% 100%,60.00% 40%,50.00% 100%,40.00% 40%,30.00% 100%,20.00% 40%,10.00% 100%,0.00% 40%)}.hero .wrap{grid-template-columns:1fr;padding-left:16px;padding-top:46px}.hcd{justify-self:start}.hcd .cd div{min-width:54px}.hcd .cd b{font-size:1.4rem}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
+  .serrate{display:none}.mflag{display:block}.hero .wrap{grid-template-columns:1fr;padding-left:16px}.hcd{justify-self:start}.hcd .cd div{min-width:54px}.hcd .cd b{font-size:1.4rem}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
   .grid{grid-template-columns:1fr}.opts{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -185,7 +186,7 @@ function home(){
   const done = store.get(TEST?"wd_done_test":"wd_done");
   app.innerHTML=`
   <section class="hero"><div class="serrate"></div><div class="wrap">
-    <div><span class="eyebrow"><i></i>1 ديسمبر · يوم المرأة البحرينية</span>
+    <div><svg class="mflag" viewBox="0 0 100 60" aria-label="علم البحرين" role="img"><rect width="100" height="60" fill="#ce1126"/><polygon points="0,0 25,0 40,6 25,12 40,18 25,24 40,30 25,36 40,42 25,48 40,54 25,60 0,60" fill="#fff"/></svg><span class="eyebrow"><i></i>1 ديسمبر · يوم المرأة البحرينية</span>
       <h1>مسابقة يوم المرأة البحرينية</h1>
       <p class="slogan">«خمسة وعشرون عاماً في قلب المشروع الإصلاحي»<span>شعار عام 2026</span></p></div>
     <div class="hcd" id="hcd" aria-live="off"></div>
