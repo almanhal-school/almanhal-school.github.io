@@ -34,7 +34,7 @@ button,input,select{font:inherit;color:inherit}
 /* hero */
 .hero{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 70%);color:#fff}
 .hero .wrap{padding-block:34px 40px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto auto;gap:24px;align-items:center}
-.serrate{position:absolute;inset:0 auto 0 0;width:84px;background:#fff;clip-path:polygon(0 0,60% 0,100% 5%,60% 10%,100% 15%,60% 20%,100% 25%,60% 30%,100% 35%,60% 40%,100% 45%,60% 50%,100% 55%,60% 60%,100% 65%,60% 70%,100% 75%,60% 80%,100% 85%,60% 90%,100% 95%,60% 100%,0 100%);opacity:.08}
+.serrate{position:absolute;inset:0 auto 0 0;width:150px;background:#ce1126;box-shadow:6px 0 24px rgba(0,0,0,.25)}.serrate::before{content:'';position:absolute;left:0;top:0;bottom:0;width:62%;background:#fff;clip-path:polygon(0 0,60% 0,100% 10%,60% 20%,100% 30%,60% 40%,100% 50%,60% 60%,100% 70%,60% 80%,100% 90%,60% 100%,0 100%)}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;font-size:.85rem}
 .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
 h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;margin:12px 0 8px;text-wrap:balance}
@@ -129,8 +129,9 @@ h2 small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.8
 .parts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
 canvas.conf{position:fixed;inset:0;pointer-events:none;z-index:50}
 footer{color:var(--muted);text-align:center;font-size:.85rem;padding-block:20px 30px}
+@media (max-width:1340px){.hero .wrap{padding-left:176px}}
 @media (max-width:760px){
-  .hero .wrap{grid-template-columns:1fr}.hcd{justify-self:start}.hcd .cd div{min-width:54px}.hcd .cd b{font-size:1.4rem}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
+  .serrate{width:48px}.hero .wrap{grid-template-columns:1fr;padding-left:64px}.hcd{justify-self:start}.hcd .cd div{min-width:54px}.hcd .cd b{font-size:1.4rem}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
   .grid{grid-template-columns:1fr}.opts{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
