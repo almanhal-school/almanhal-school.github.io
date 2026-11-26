@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مسابقة يوم المرأة البحرينية</title>
+<meta name="description" content="مسابقة إلكترونية بمناسبة يوم المرأة البحرينية 2026 - مدرسة المنهل الابتدائية للبنين">
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+/* School portal theme (navy + Tajawal) with Bahrain red and jubilee gold for the occasion */
+:root{
+  --bg:#f4f1ec; --surface:#ffffff; --fg:#14213d; --muted:#5d6a82; --line:#e3ded4;
+  --navy:#1e3c72; --navy2:#152c55; --red:#ce1126; --red-soft:#fbe8ea; --gold:#c8962e; --gold-soft:#f8eed7;
+  --good:#1f7a4d; --good-soft:#e3f4ea; --bad:#b3261e;
+  --display:"Tajawal",system-ui,sans-serif; --body:"IBM Plex Sans Arabic","Tajawal",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f1626; --surface:#17213a; --fg:#eef2f9; --muted:#a3afc6; --line:#2a3656;
+  --navy:#3d64b0; --navy2:#0b1426; --red:#ef4258; --red-soft:#3a1720; --gold:#e1b45a; --gold-soft:#33291a;
+  --good:#4cc08a; --good-soft:#163527; --bad:#ff6b5f; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* header */
+.top{background:var(--navy2);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:12px}
+.top img{width:46px;height:46px;background:#fff;border-radius:50%;padding:3px}
+.top b{font-family:var(--display);font-weight:800;font-size:1.05rem;display:block}
+.top small{opacity:.75}
+.testbar{background:var(--gold);color:#1b1407;text-align:center;font-weight:700;padding:6px;font-size:.9rem}
+/* hero */
+.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 70%);color:#fff}
+.hero .wrap{padding-block:34px 40px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.serrate{position:absolute;inset:0 auto 0 0;width:84px;background:#fff;clip-path:polygon(0 0,60% 0,100% 5%,60% 10%,100% 15%,60% 20%,100% 25%,60% 30%,100% 35%,60% 40%,100% 45%,60% 50%,100% 55%,60% 60%,100% 65%,60% 70%,100% 75%,60% 80%,100% 85%,60% 90%,100% 95%,60% 100%,0 100%);opacity:.08}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;font-size:.85rem}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;margin:12px 0 8px;text-wrap:balance}
+.slogan{font-family:var(--display);font-size:clamp(1.05rem,2.6vw,1.35rem);color:#f3d9a0;font-weight:700;margin:0}
+.slogan span{opacity:.75;font-weight:500;color:#fff;font-size:.85em;display:block;margin-top:2px}
+.seal{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#e7c57a,#b8862b);color:#2a1d05;box-shadow:0 0 0 6px rgba(255,255,255,.12),0 0 0 12px rgba(200,150,46,.25)}
+.seal b{font-family:var(--display);font-size:3.2rem;font-weight:900;line-height:1;display:block}
+.seal small{font-weight:700;font-size:.85rem;line-height:1.3;display:block}
+/* status strip */
+.status{margin-top:-22px;position:relative;z-index:2}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.state{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.state .t{font-family:var(--display);font-weight:800;font-size:1.15rem}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 12px;font-weight:700;font-size:.85rem}
+.pill.on{background:var(--good-soft);color:var(--good)}.pill.wait{background:var(--gold-soft);color:var(--gold)}.pill.off{background:var(--red-soft);color:var(--red)}
+.pill.on::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.cd{display:flex;gap:8px;direction:rtl}
+.cd div{background:var(--bg);border-radius:10px;padding:6px 10px;text-align:center;min-width:58px}
+.cd b{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.cd small{color:var(--muted);font-size:.75rem}
+.btn{appearance:none;border:0;border-radius:12px;background:var(--red);color:#fff;font-family:var(--display);font-weight:800;font-size:1.05rem;padding:12px 26px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+/* dashboard */
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-block:22px 30px}
+.grid>*{min-width:0}
+h2{font-family:var(--display);font-weight:800;font-size:1.2rem;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+h2 small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:.8rem}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:10px;margin-top:8px}
+.pod{text-align:center;min-width:0}
+.pod .who{font-weight:700;font-size:.92rem;overflow-wrap:anywhere;line-height:1.35;min-height:2.6em;display:flex;align-items:flex-end;justify-content:center}
+.pod .sc{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+.pod .blk{border-radius:12px 12px 4px 4px;margin-top:8px;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:2rem;color:#fff}
+.p1 .blk{height:130px;background:linear-gradient(var(--gold),#a87921)}.p2 .blk{height:96px;background:linear-gradient(#9aa7bd,#6f7d96)}.p3 .blk{height:74px;background:linear-gradient(#c98a5a,#9c6236)}
+.pod .crown{font-size:1.4rem;line-height:1}
+.empty{color:var(--muted);text-align:center;padding:26px 8px}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px dashed var(--line)}
+.list li:last-child{border:0}
+.list .n{font-family:var(--display);font-weight:800;color:var(--muted);text-align:center}
+.list .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list .nm small{color:var(--muted)}
+.list .s{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:12px;padding:10px;text-align:center}
+.stat b{font-family:var(--display);font-size:1.5rem;display:block;font-variant-numeric:tabular-nums}
+.stat small{color:var(--muted);font-size:.8rem}
+.rules{margin:0;padding-inline-start:18px;color:var(--muted);font-size:.92rem}
+.rules b{color:var(--fg)}
+/* join form */
+.join{display:grid;gap:12px;margin-top:6px}
+.join label{font-weight:600;font-size:.9rem;display:block;margin-bottom:4px}
+.join input,.join select{width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px}
+.join input:focus,.join select:focus{outline:2px solid var(--navy);border-color:transparent}
+.err{color:var(--bad);font-size:.9rem;min-height:1.2em}
+/* quiz */
+.quiz{max-width:720px;margin:26px auto 40px}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;color:var(--muted);font-size:.9rem}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .4s}
+.round{display:inline-block;background:var(--navy);color:#fff;border-radius:8px;padding:2px 10px;font-weight:700;font-size:.85rem}
+.qtext{font-family:var(--display);font-weight:800;font-size:clamp(1.25rem,3.6vw,1.6rem);line-height:1.4;margin:14px 0 18px;text-wrap:balance}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{appearance:none;text-align:start;border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;cursor:pointer;font-weight:600;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-family:var(--display);font-weight:800;color:var(--navy)}
+.opt:hover{border-color:var(--navy)}.opt:focus-visible{outline:3px solid var(--gold)}
+.opt.sel{border-color:var(--navy);background:var(--navy);color:#fff}.opt.sel .k{background:rgba(255,255,255,.18);color:#fff}
+.timer{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums;font-weight:700}
+.timer svg{width:34px;height:34px;transform:rotate(-90deg)}
+.timer circle{fill:none;stroke-width:5}
+.clues{display:grid;gap:8px;margin-bottom:16px}
+.clue{background:var(--gold-soft);border-radius:12px;padding:10px 14px;display:flex;gap:10px;align-items:center;animation:rise .35s ease}
+.clue b{font-family:var(--display);color:var(--gold);flex:none}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}}
+.worth{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.worth .pts{font-family:var(--display);font-weight:900;font-size:1.3rem;color:var(--red)}
+.order{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+.order li{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px}
+.order .pos{font-family:var(--display);font-weight:900;color:var(--gold);width:22px;text-align:center}
+.order .tx{flex:1;font-weight:600;min-width:0}
+.order button{appearance:none;border:1.5px solid var(--line);background:var(--bg);border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:1rem}
+.order button:disabled{opacity:.3;cursor:default}
+.nav{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+/* result */
+.result{text-align:center;max-width:560px;margin:30px auto 40px}
+.big{font-family:var(--display);font-weight:900;font-size:4.2rem;line-height:1;color:var(--red);font-variant-numeric:tabular-nums}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+canvas.conf{position:fixed;inset:0;pointer-events:none;z-index:50}
+footer{color:var(--muted);text-align:center;font-size:.85rem;padding-block:20px 30px}
+@media (max-width:760px){
+  .hero .wrap{grid-template-columns:1fr}.seal{width:110px;height:110px;justify-self:start}.seal b{font-size:2.4rem}
+  .grid{grid-template-columns:1fr}.opts{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img src="logo.png" alt="شعار مدرسة المنهل"><div><b>مدرسة المنهل الابتدائية للبنين</b><small>احتفاءً بيوم المرأة البحرينية</small></div></div></header>
+<div class="testbar" id="testbar" hidden>وضع التجربة: المسابقة مفتوحة لك الحين، والنتيجة تنحفظ في ورقة "تجربة" بس</div>
+<main id="app"></main>
+<footer class="wrap">مدرسة المنهل الابتدائية للبنين · يوم المرأة البحرينية 1 ديسمبر 2026</footer>
+<canvas class="conf" id="conf" hidden></canvas>
+<script>
+/* ===== إعدادات ===== */
+const API = "";  // رابط Google Apps Script بعد النشر
+const OPEN = new Date("2026-12-01T07:00:00+03:00"), CLOSE = new Date("2026-12-01T21:00:00+03:00");
+const TEST = new URLSearchParams(location.search).get("test") === "1";
+const LIMIT = 20;
+/* الأسئلة (الإجابات الصحيحة محفوظة في الخادم فقط) */
+const Q = [
+ {id:"q1",r:1,t:"متى يُحتفى بيوم المرأة البحرينية كل عام؟",o:["8 مارس","1 ديسمبر","16 ديسمبر","21 مارس"]},
+ {id:"q2",r:1,t:"ما شعار الاحتفاء بيوم المرأة البحرينية لعام 2026؟",o:["«المرأة البحرينية شريك في التنمية»","«ريادة وطموح نحو المستقبل»","«خمسة وعشرون عاماً في قلب المشروع الإصلاحي»","«المرأة البحرينية في العلوم والتكنولوجيا»"]},
+ {id:"q3",r:1,t:"في أي عام تأسس المجلس الأعلى للمرأة؟",o:["2001","1999","2005","2008"]},
+ {id:"q4",r:1,t:"من تترأس المجلس الأعلى للمرأة؟",o:["الشيخة هيا بنت راشد آل خليفة","د. ندى حفاظ","الشيخة مي بنت محمد آل خليفة","صاحبة السمو الملكي الأميرة سبيكة بنت إبراهيم آل خليفة"]},
+ {id:"q5",r:1,t:"في أي عام افتُتحت أول مدرسة نظامية للبنات في البحرين؟",o:["1919","1928","1945","1961"]},
+ {id:"q6",r:1,t:"متى شاركت المرأة البحرينية لأول مرة في الانتخابات النيابية تصويتاً وترشيحاً؟",o:["1973","1992","2002","2010"]},
+ {id:"q7",r:2,t:"من هي؟",c:["طبيبة بحرينية","عُيّنت وزيرةً للصحة عام 2004","أول امرأة تتولى منصب وزيرة في مملكة البحرين"],o:["فوزية زينل","د. ندى حفاظ","الشيخة هيا بنت راشد آل خليفة","لطيفة القعود"]},
+ {id:"q8",r:2,t:"من هي؟",c:["قانونية ومحامية بحرينية","مثّلت البحرين سفيرةً في فرنسا","ترأست الجمعية العامة للأمم المتحدة عام 2006"],o:["د. ندى حفاظ","لطيفة القعود","فوزية زينل","الشيخة هيا بنت راشد آل خليفة"]},
+ {id:"q9",r:2,t:"من هي؟",c:["إعلامية بحرينية","فازت بمقعد نيابي في انتخابات 2018","أول امرأة تترأس مجلس النواب البحريني"],o:["فوزية زينل","لطيفة القعود","د. ندى حفاظ","الشيخة هيا بنت راشد آل خليفة"]},
+ {id:"q10",r:3,t:"رتّبي هذه المحطات من الأقدم إلى الأحدث",items:{a:"افتتاح أول مدرسة نظامية للبنات",b:"تأسيس المجلس الأعلى للمرأة",c:"تعيين أول وزيرة بحرينية",d:"أول امرأة تترأس مجلس النواب"}}
+];
+const ROUND = {1:"الجولة الأولى · اختيار من متعدد",2:"الجولة الثانية · من هي؟",3:"الجولة الثالثة · رتّبي الأحداث"};
+const app = document.getElementById("app");
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let did = store.get("wd_did"); if(!did){did=Math.random().toString(36).slice(2)+Date.now().toString(36);store.set("wd_did",did)}
+if(TEST) $("#testbar").hidden=false;
+const phase = () => TEST ? "open" : (Date.now()<OPEN ? "before" : Date.now()>CLOSE ? "after" : "open");
+let board = {top:[],count:0}, timers=[];
+const clearTimers=()=>{timers.forEach(clearInterval);timers=[]};
+
+async function loadBoard(){
+  if(!API) return;
+  try{const r=await fetch(API+(TEST?"?test=1":""));const j=await r.json();if(j.ok){board=j;renderBoard()}}catch(e){}
+}
+function fmtCd(ms){const s=Math.max(0,Math.floor(ms/1000));return[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60]}
+
+/* ===== الصفحة الرئيسية (لوحة) ===== */
+function home(){
+  clearTimers();
+  const done = store.get(TEST?"wd_done_test":"wd_done");
+  app.innerHTML=`
+  <section class="hero"><div class="serrate"></div><div class="wrap">
+    <div><span class="eyebrow"><i></i>1 ديسمبر · يوم المرأة البحرينية</span>
+      <h1>مسابقة يوم المرأة البحرينية</h1>
+      <p class="slogan">«خمسة وعشرون عاماً في قلب المشروع الإصلاحي»<span>شعار عام 2026</span></p></div>
+    <div class="seal" aria-hidden="true"><div><b>25</b><small>عاماً<br>2001 – 2026</small></div></div>
+  </div></section>
+  <div class="wrap status"><div class="card state" id="state"></div></div>
+  <div class="wrap grid">
+    <section class="card"><h2>المتصدرات <small id="upd">${API?"تتحدث تلقائياً":"تظهر بعد ربط النتائج"}</small></h2>
+      <div id="podium"></div><ul class="list" id="list"></ul></section>
+    <section class="card" id="side"></section>
+  </div>`;
+  renderState(done); renderBoard(); renderSide(done);
+  timers.push(setInterval(()=>renderState(done),1000));
+  timers.push(setInterval(loadBoard,20000)); loadBoard();
+}
+function renderState(done){
+  const p=phase(), el=$("#state"); if(!el) return;
+  if(p==="before"){const [d,h,m,s]=fmtCd(OPEN-Date.now());
+    el.innerHTML=`<div><span class="pill wait">تفتح قريباً</span><div class="t">تبدأ المسابقة الثلاثاء 1 ديسمبر الساعة 7:00 صباحاً</div></div>
+    <div class="cd"><div><b>${d}</b><small>يوم</small></div><div><b>${h}</b><small>ساعة</small></div><div><b>${m}</b><small>دقيقة</small></div><div><b>${s}</b><small>ثانية</small></div></div>`}
+  else if(p==="open"){const [d,h,m]=fmtCd(CLOSE-Date.now());
+    el.innerHTML=`<div><span class="pill on">مفتوحة الآن</span><div class="t">${TEST?"وضع التجربة":`تُغلق الساعة 9:00 مساءً · باقي ${h} ساعة و${m} دقيقة`}</div></div>`}
+  else el.innerHTML=`<div><span class="pill off">انتهت المسابقة</span><div class="t">شكراً لكل المشاركات، وهذي أسماء الفائزات</div></div>`;
+}
+function renderBoard(){
+  const pod=$("#podium"), list=$("#list"); if(!pod) return;
+  const t=board.top||[];
+  if(!t.length){pod.innerHTML=`<div class="empty">ما في مشاركات للحين.<br>أول ثلاث نتائج بتظهر هنا.</div>`;list.innerHTML="";return}
+  const slot=(i,cls)=>{const x=t[i];return `<div class="pod ${cls}">${i===0?'<div class="crown">👑</div>':""}<div class="who">${x?esc(x.name):"—"}</div><div class="sc">${x?x.score+" نقطة":""}</div><div class="blk">${i+1}</div></div>`};
+  pod.innerHTML=`<div class="podium">${slot(1,"p2")}${slot(0,"p1")}${slot(2,"p3")}</div>`;
+  list.innerHTML=t.slice(3,10).map((x,i)=>`<li><span class="n">${i+4}</span><span class="nm">${esc(x.name)} <small>${esc(x.role||"")}</small></span><span class="s">${x.score}</span></li>`).join("");
+  const c=$("#count"); if(c) c.textContent=board.count||0;
+}
+function renderSide(done){
+  const p=phase(), side=$("#side");
+  const stats=`<div class="stats"><div class="stat"><b>10</b><small>أسئلة</small></div><div class="stat"><b>200</b><small>الدرجة الكاملة</small></div><div class="stat"><b id="count">${board.count||0}</b><small>مشاركة</small></div></div>`;
+  const rules=`<ul class="rules"><li><b>الجولة الأولى:</b> 6 أسئلة اختيار، 10 نقاط لكل جواب صح و5 نقاط إضافية للسرعة (20 ثانية لكل سؤال).</li><li><b>من هي؟</b> 3 شخصيات. جوابك من أول تلميح 30 نقطة، ثم 20، ثم 10.</li><li><b>رتّبي الأحداث:</b> 5 نقاط لكل حدث في مكانه.</li><li>محاولة وحدة لكل مشاركة، وعند التعادل تتقدم الأسرع.</li></ul>`;
+  if(done){side.innerHTML=`<h2>مشاركتك</h2><div class="result" style="margin:6px 0 14px"><div class="big">${done.score??"✓"}</div><p>${done.score!=null?"نقطة من 200":"تم استلام إجاباتك"}${done.rank?` · ترتيبك ${done.rank}`:""}</p></div>${stats}${rules}`;return}
+  if(p==="open"){side.innerHTML=`<h2>شاركي الآن</h2>${stats}
+    <form class="join" id="join"><div><label for="nm">الاسم الثلاثي</label><input id="nm" maxlength="60" autocomplete="name" required placeholder="مثال: مريم أحمد علي"></div>
+    <div><label for="rl">الصفة</label><select id="rl"><option>معلمة</option><option>إدارية</option><option>أخصائية</option><option>ولية أمر</option><option>أخرى</option></select></div>
+    <div class="err" id="err"></div><button class="btn" type="submit">ابدئي المسابقة</button></form>
+    <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--muted)">طريقة احتساب النقاط</summary>${rules}</details>`;
+    $("#join").onsubmit=e=>{e.preventDefault();const n=$("#nm").value.trim();if(n.split(/\s+/).length<2){$("#err").textContent="اكتبي اسمك الثلاثي عشان يظهر صح في لوحة المتصدرات.";return}start(n,$("#rl").value)}}
+  else side.innerHTML=`<h2>${p==="before"?"طريقة المسابقة":"النتائج النهائية"}</h2>${stats}${rules}`;
+}
+
+/* ===== المسابقة ===== */
+let S;
+function start(name,role){
+  clearTimers();
+  const ids=Object.keys(Q[9].items).sort(()=>Math.random()-.5);
+  S={name,role,i:0,answers:{},times:{},clues:{},order:ids,t0:Date.now()};
+  window.scrollTo(0,0); step();
+}
+function shell(q,body){
+  const n=S.i+1;
+  app.innerHTML=`<div class="wrap quiz"><div class="qhead"><span class="round">${ROUND[q.r]}</span><span>السؤال ${n} من 10</span></div>
+  <div class="bar"><i style="width:${(S.i)/10*100}%"></i></div><div class="card">${body}</div></div>`;
+}
+function step(){
+  clearTimers();
+  const q=Q[S.i]; if(!q) return finish();
+  if(q.r===1){
+    shell(q,`<div class="worth"><span class="pts">10 + سرعة</span><span class="timer" id="tm"></span></div><div class="qtext">${q.t}</div>
+    <div class="opts">${q.o.map((o,j)=>`<button class="opt" data-j="${j}"><span class="k">${"أبجد"[j]}</span><span>${o}</span></button>`).join("")}</div>`);
+    const t0=Date.now();
+    const tick=()=>{const left=Math.max(0,LIMIT-(Date.now()-t0)/1000),f=left/LIMIT;
+      $("#tm").innerHTML=`<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" stroke="var(--line)"/><circle cx="18" cy="18" r="15" stroke="${f>.3?"var(--good)":"var(--red)"}" stroke-dasharray="${94.2*f} 94.2"/></svg>${Math.ceil(left)}`;
+      if(left<=0){S.times[q.id]=LIMIT*1000;next()}};
+    tick(); timers.push(setInterval(tick,200));
+    app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{b.classList.add("sel");S.answers[q.id]=+b.dataset.j;S.times[q.id]=Date.now()-t0;clearTimers();setTimeout(next,350)});
+  } else if(q.r===2){
+    let shown=1;
+    const draw=()=>{shell(q,`<div class="worth"><span class="pts">${[30,20,10][shown-1]} نقطة</span>
+      ${shown<3?`<button class="btn ghost" id="more" type="button">تلميح جديد (تنقص النقاط)</button>`:""}</div>
+      <div class="qtext">${q.t}</div><div class="clues">${q.c.slice(0,shown).map((c,k)=>`<div class="clue"><b>${k+1}</b><span>${c}</span></div>`).join("")}</div>
+      <div class="opts">${q.o.map((o,j)=>`<button class="opt" data-j="${j}"><span class="k">${"أبجد"[j]}</span><span>${o}</span></button>`).join("")}</div>`);
+      const m=$("#more"); if(m) m.onclick=()=>{shown++;draw()};
+      app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{b.classList.add("sel");S.answers[q.id]=+b.dataset.j;S.clues[q.id]=shown;setTimeout(next,350)});};
+    draw();
+  } else {
+    const draw=()=>{shell(q,`<div class="worth"><span class="pts">5 نقاط لكل حدث</span><span style="color:var(--muted)">الأقدم فوق</span></div><div class="qtext">${q.t}</div>
+      <ol class="order">${S.order.map((id,k)=>`<li><span class="pos">${k+1}</span><span class="tx">${q.items[id]}</span>
+      <button type="button" aria-label="لفوق" data-k="${k}" data-d="-1" ${k===0?"disabled":""}>▲</button><button type="button" aria-label="لتحت" data-k="${k}" data-d="1" ${k===S.order.length-1?"disabled":""}>▼</button></li>`).join("")}</ol>
+      <div class="nav"><button class="btn" id="send" type="button">إرسال الإجابات</button></div>`);
+      app.querySelectorAll(".order button").forEach(b=>b.onclick=()=>{const k=+b.dataset.k,d=+b.dataset.d,o=S.order;[o[k],o[k+d]]=[o[k+d],o[k]];draw()});
+      $("#send").onclick=()=>{$("#send").disabled=true;S.i++;finish()};};
+    draw();
+  }
+}
+function next(){S.i++;step()}
+async function finish(){
+  clearTimers();
+  const total=Date.now()-S.t0;
+  app.innerHTML=`<div class="wrap result"><div class="card"><p>جاري حساب النتيجة...</p></div></div>`;
+  let res=null;
+  if(API){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({name:S.name,role:S.role,answers:S.answers,times:S.times,clues:S.clues,order:S.order,total,did,test:TEST})});res=await r.json()}catch(e){}}
+  if(res&&res.ok){store.set(TEST?"wd_done_test":"wd_done",{score:res.score,rank:res.rank});
+    app.innerHTML=`<div class="wrap result"><div class="card"><h1 style="margin-top:0">${res.already?"شاركتي قبل":"أحسنتِ يا "+esc(S.name.split(" ")[0])}!</h1>
+    <div class="big">${res.score}</div><p>نقطة من 200 · ترتيبك ${res.rank} من ${res.count}</p>
+    ${res.parts?`<div class="parts"><div class="stat"><b>${res.parts[0]}</b><small>الجولة 1 من 90</small></div><div class="stat"><b>${res.parts[1]}</b><small>من هي؟ من 90</small></div><div class="stat"><b>${res.parts[2]}</b><small>الترتيب من 20</small></div></div>`:""}
+    <p style="color:var(--muted)">الفائزات الثلاث يُعلنّ بعد إغلاق المسابقة الساعة 9 مساءً.</p><button class="btn" id="back">لوحة المتصدرات</button></div></div>`;
+    confetti();
+  } else if(res&&res.error==="closed"){app.innerHTML=`<div class="wrap result"><div class="card"><h1>المسابقة مسكّرة</h1><p>المسابقة تفتح يوم 1 ديسمبر من 7 صباحاً إلى 9 مساءً.</p><button class="btn" id="back">رجوع</button></div></div>`}
+  else {
+    if(!API) store.set(TEST?"wd_done_test":"wd_done",{score:null});
+    app.innerHTML=`<div class="wrap result"><div class="card"><h1>${API?"ما وصلت إجاباتك":"تم إنهاء التجربة"}</h1><p>${API?"تأكدي من الإنترنت وحاولي مرة ثانية.":"حفظ النتائج ما انربط للحين، فما تظهر الدرجة في هذي التجربة."}</p>
+    ${API?`<button class="btn" id="retry">إعادة الإرسال</button> `:""}<button class="btn ghost" id="back">رجوع</button></div></div>`;
+    const rt=$("#retry"); if(rt) rt.onclick=()=>{S.t0=Date.now()-total;finish()};
+  }
+  const b=$("#back"); if(b) b.onclick=home;
+}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c=$("#conf"),x=c.getContext("2d");c.hidden=false;c.width=innerWidth;c.height=innerHeight;
+  const cols=["#ce1126","#ffffff","#c8962e","#1e3c72"],P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,v:2+Math.random()*3,r:Math.random()*6.28,s:5+Math.random()*6,c:cols[Math.random()*4|0]}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.x+=Math.sin((f+p.r*20)/20);p.r+=.05;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});
+  if(++f<240)requestAnimationFrame(loop);else c.hidden=true})();
+}
+home();
+</script>
+</body>
+</html>
